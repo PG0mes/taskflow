@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Board {
+  id        Int      @id @default(autoincrement())
+  title     String
+  createdAt DateTime @default(now())
+  lists     List[]   // Um Board tem muitas Listas
+}
+
+model List {
+  id        Int      @id @default(autoincrement())
+  title     String
+  boardId   Int
+  board     Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  cards     Card[]   // Uma Lista tem muitos Cartões
+}
+
+model Card {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  priority    String   @default("low")
+  order       Int      @default(0) // <--- NOVO CAMPO (Posição na fila)
+  listId      Int
+  list        List     @relation(fields: [listId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
+  name     String?
+  password String
+  createdAt DateTime @default(now())
+}

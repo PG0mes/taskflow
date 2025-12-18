@@ -1,0 +1,16 @@
+# Dependências do Node (nunca subir isso!)
+node_modules/
+*/node_modules/
+
+# Arquivos de Build (gerados automaticamente)
+dist/
+build/
+*/dist/
+
+# Arquivos de Ambiente (segurança)
+.env
+*/.env
+
+# Arquivos de Sistema
+.DS_Store
+Thumbs.db
