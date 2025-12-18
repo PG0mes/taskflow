@@ -1,4 +1,4 @@
-# 🚀 TaskFlow
+# TaskFlow
 
 ![TaskFlow Status](https://img.shields.io/badge/Status-Concluído-brightgreen) ![License](https://img.shields.io/badge/License-MIT-blue)
 
@@ -36,7 +36,7 @@ O projeto foi desenvolvido utilizando as seguintes tecnologias:
 
 ---
 
-## 🚀 Como Rodar o Projeto
+## Como Rodar o Projeto
 
 ### Pré-requisitos
 * Node.js instalado
