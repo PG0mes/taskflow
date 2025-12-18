@@ -1,6 +1,6 @@
 # TaskFlow
 
-![TaskFlow Status](https://img.shields.io/badge/Status-Concluído-brightgreen) ![License](https://img.shields.io/badge/License-MIT-blue)
+![TaskFlow Status](https://img.shields.io/badge/Status-Concluído-brightgreen)
 
 **TaskFlow** é uma aplicação Fullstack de gerenciamento de tarefas estilo Kanban. Desenvolvida para oferecer uma experiência fluida com Drag and Drop.
 
