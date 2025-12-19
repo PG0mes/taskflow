@@ -21,7 +21,7 @@ function Login() {
     const body = isRegister ? { email, password, name } : { email, password };
 
     try {
-      const response = await fetch(`http://localhost:3001/${endpoint}`, {
+      const response = await fetch(`https://taskflow-api-6l5b.onrender.com/${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),

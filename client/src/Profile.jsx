@@ -24,7 +24,7 @@ function Profile() {
     const localUser = JSON.parse(localStorage.getItem('user') || '{}');
     if (!localUser.id) return navigate('/login');
 
-    fetch('http://localhost:3001/me', {
+    fetch('https://taskflow-api-6l5b.onrender.com/me', {
       headers: { 
         'Authorization': localStorage.getItem('token'),
         'user-id': localUser.id 
@@ -39,7 +39,7 @@ function Profile() {
     const localUser = JSON.parse(localStorage.getItem('user'));
     
     try {
-      const response = await fetch('http://localhost:3001/me', {
+      const response = await fetch('https://taskflow-api-6l5b.onrender.com/me', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 

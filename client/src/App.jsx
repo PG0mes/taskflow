@@ -44,13 +44,13 @@ function App() {
 
     try {
       // 1. Busca Quadros
-      const resBoards = await fetch('http://localhost:3001/boards', { headers: getAuthHeaders() });
+      const resBoards = await fetch('https://taskflow-api-6l5b.onrender.com/boards', { headers: getAuthHeaders() });
       if (resBoards.status === 401 || resBoards.status === 403) { handleLogout(); return; }
       const dataBoards = await resBoards.json();
       setBoards(dataBoards);
 
       // 2. Busca Notificações (Convites)
-      const resInvites = await fetch('http://localhost:3001/notifications', { headers: getAuthHeaders() });
+      const resInvites = await fetch('https://taskflow-api-6l5b.onrender.com/notifications', { headers: getAuthHeaders() });
       if (resInvites.ok) {
           const dataInvites = await resInvites.json();
           setInvites(dataInvites);
@@ -69,7 +69,7 @@ function App() {
     if (!newBoardTitle) return;
 
     try {
-      const response = await fetch('http://localhost:3001/boards', {
+      const response = await fetch('https://taskflow-api-6l5b.onrender.com/boards', {
         method: 'POST',
         headers: getAuthHeaders(),
         body: JSON.stringify({ title: newBoardTitle }),
@@ -89,7 +89,7 @@ function App() {
   // Nova função: Responder ao convite
   const handleRespondInvite = async (id, accept) => {
       try {
-          await fetch(`http://localhost:3001/notifications/${id}/respond`, {
+          await fetch(`https://taskflow-api-6l5b.onrender.com/notifications/${id}/respond`, {
               method: 'POST',
               headers: getAuthHeaders(),
               body: JSON.stringify({ accept })
@@ -111,7 +111,7 @@ function App() {
       if(!confirm("Tem certeza que deseja apagar este quadro e todas as suas tarefas?")) return;
 
       try {
-          const response = await fetch(`http://localhost:3001/boards/${boardId}`, {
+          const response = await fetch(`https://taskflow-api-6l5b.onrender.com/boards/${boardId}`, {
               method: 'DELETE',
               headers: getAuthHeaders()
           });

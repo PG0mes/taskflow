@@ -78,7 +78,7 @@ function Board() {
     if (!token) return navigate('/login');
 
     try {
-      const response = await fetch(`http://localhost:3001/boards/${id}`, {
+      const response = await fetch(`https://taskflow-api-6l5b.onrender.com/boards/${id}`, {
         headers: getAuthHeaders() // Using the helper
       });
 
@@ -123,7 +123,7 @@ function Board() {
     const destCardIds = destList.cards.map(card => card.id);
 
     try {
-      await fetch('http://localhost:3001/cards/reorder', {
+      await fetch('https://taskflow-api-6l5b.onrender.com/cards/reorder', {
         method: 'PUT',
         headers: getAuthHeaders(),
         body: JSON.stringify({ listId: destListId, cardIds: destCardIds }),
@@ -132,7 +132,7 @@ function Board() {
       if (sourceListIndex !== destListIndex) {
          const sourceListId = sourceList.id;
          const sourceCardIds = sourceList.cards.map(card => card.id);
-         await fetch('http://localhost:3001/cards/reorder', {
+         await fetch('https://taskflow-api-6l5b.onrender.com/cards/reorder', {
           method: 'PUT',
           headers: getAuthHeaders(),
           body: JSON.stringify({ listId: sourceListId, cardIds: sourceCardIds }),
@@ -144,7 +144,7 @@ function Board() {
   const handleAddList = async (e) => {
     e.preventDefault();
     if (!newListTitle) return;
-    await fetch('http://localhost:3001/lists', {
+    await fetch('https://taskflow-api-6l5b.onrender.com/lists', {
       method: 'POST',
       headers: getAuthHeaders(),
       body: JSON.stringify({ title: newListTitle, boardId: id }),
@@ -157,7 +157,7 @@ function Board() {
     e.preventDefault();
     const title = newCardTitles[listId];
     if (!title) return;
-    await fetch('http://localhost:3001/cards', {
+    await fetch('https://taskflow-api-6l5b.onrender.com/cards', {
       method: 'POST',
       headers: getAuthHeaders(),
       body: JSON.stringify({ title, listId }),
@@ -168,7 +168,7 @@ function Board() {
 
   const handleDeleteCard = async (cardId) => {
     if (!confirm("Excluir cartão?")) return;
-    await fetch(`http://localhost:3001/cards/${cardId}`, { 
+    await fetch(`https://taskflow-api-6l5b.onrender.com/cards/${cardId}`, { 
         method: 'DELETE',
         headers: getAuthHeaders()
     });
@@ -177,7 +177,7 @@ function Board() {
 
   const handleDeleteList = async (listId) => {
     if (!confirm("Excluir lista?")) return;
-    await fetch(`http://localhost:3001/lists/${listId}`, { 
+    await fetch(`https://taskflow-api-6l5b.onrender.com/lists/${listId}`, { 
         method: 'DELETE',
         headers: getAuthHeaders()
     });
@@ -185,7 +185,7 @@ function Board() {
   };
 
   const handleUpdateCard = async (updatedCard) => {
-    await fetch(`http://localhost:3001/cards/${updatedCard.id}`, {
+    await fetch(`https://taskflow-api-6l5b.onrender.com/cards/${updatedCard.id}`, {
       method: 'PUT',
       headers: getAuthHeaders(),
       body: JSON.stringify(updatedCard),
@@ -196,7 +196,7 @@ function Board() {
   const handleInvite = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:3001/boards/${id}/invite`, {
+      const response = await fetch(`https://taskflow-api-6l5b.onrender.com/boards/${id}/invite`, {
         method: 'POST',
         headers: getAuthHeaders(),
         body: JSON.stringify({ email: inviteEmail }),
