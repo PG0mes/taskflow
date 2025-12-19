@@ -6,6 +6,16 @@
 
 ---
 
+## 📸 Screenshots
+
+<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+  <img src="./screenshots/tela.inicial.png" alt="Tela Inicial do Sistema" width="45%" style="border-radius: 10px; border: 1px solid #ccc;" />
+  <img src="./screenshots/tela.quadro.png" alt="Board Kanban com Drag and Drop" width="45%" style="border-radius: 10px; border: 1px solid #ccc;" />
+</div>
+
+> *Acima: Visão da tela de inicial e do painel principal de tarefas.*
+---
+
 ## 🛠️ Tecnologias Utilizadas
 
 O projeto foi desenvolvido utilizando as seguintes tecnologias:
