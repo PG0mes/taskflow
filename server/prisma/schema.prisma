@@ -7,35 +7,80 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id              Int      @id @default(autoincrement())
+  email           String   @unique
+  name            String?
+  password        String
+  createdAt       DateTime @default(now())
+
+  // Relacionamentos com Quadros
+  ownedBoards     Board[]  @relation("Owner")   // Quadros que sou dono
+  memberBoards    Board[]  @relation("Members") // Quadros que sou membro
+
+  // Relacionamentos de Convites (Novo)
+  sentInvites     Invite[] @relation("Sender")   // Convites que enviei
+  receivedInvites Invite[] @relation("Receiver") // Convites que recebi
+}
+
 model Board {
   id        Int      @id @default(autoincrement())
   title     String
   createdAt DateTime @default(now())
-  lists     List[]   // Um Board tem muitas Listas
+  
+  // Conteúdo do Quadro
+  lists     List[]   // Se apagar o Board, as Lists somem (Cascade configurado no model List)
+
+  // Dono e Membros
+  ownerId   Int
+  owner     User     @relation("Owner", fields: [ownerId], references: [id])
+  members   User[]   @relation("Members")
+
+  // Convites pendentes para este quadro (Novo)
+  invites   Invite[]
 }
 
 model List {
-  id        Int      @id @default(autoincrement())
-  title     String
-  boardId   Int
-  board     Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
-  cards     Card[]   // Uma Lista tem muitos Cartões
+  id      Int    @id @default(autoincrement())
+  title   String
+  
+  boardId Int
+  // onDelete: Cascade -> Se o Board for deletado, esta lista é deletada automaticamente
+  board   Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  
+  cards   Card[]
 }
 
 model Card {
-  id          Int      @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   title       String
   description String?
-  priority    String   @default("low")
-  order       Int      @default(0) // <--- NOVO CAMPO (Posição na fila)
+  priority    String  @default("low")
+  order       Int     @default(0)
+  
   listId      Int
-  list        List     @relation(fields: [listId], references: [id], onDelete: Cascade)
+  // onDelete: Cascade -> Se a Lista for deletada, este cartão é deletado automaticamente
+  list        List    @relation(fields: [listId], references: [id], onDelete: Cascade)
 }
 
-model User {
-  id       Int      @id @default(autoincrement())
-  email    String   @unique
-  name     String?
-  password String
-  createdAt DateTime @default(now())
+// --- NOVO MODELO: Convites ---
+model Invite {
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  
+  // Quem enviou (Geralmente o dono)
+  senderId   Int
+  sender     User     @relation("Sender", fields: [senderId], references: [id])
+  
+  // Quem recebeu (O convidado)
+  receiverId Int
+  receiver   User     @relation("Receiver", fields: [receiverId], references: [id])
+  
+  // Para qual quadro
+  boardId    Int
+  // onDelete: Cascade -> Se o Board for deletado, o convite pendente some
+  board      Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
+
+  // Garante que não posso convidar a mesma pessoa 2x para o mesmo quadro
+  @@unique([boardId, receiverId])
 }
